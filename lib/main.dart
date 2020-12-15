@@ -1,5 +1,6 @@
-import 'package:agora_video_call/pages/HomePage.dart';
+
 import 'package:flutter/material.dart';
+import 'pages/HomePage.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Agora Group Video Call',
+      title: 'Kokkehjelp',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.

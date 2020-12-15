@@ -1,11 +1,11 @@
+import '../models/token_model.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import '../utils/AppID.dart';
 
 class CallPage extends StatefulWidget {
   
-  final String channelName;
-  const CallPage({Key key, this.channelName}) : super(key: key);
+  final Token token;
+  const CallPage({Key key, this.token}) : super(key: key);
 
   @override
   _CallPageState createState() => _CallPageState();
@@ -33,7 +33,7 @@ class _CallPageState extends State<CallPage> {
     initialize();
   }
   Future<void> initialize() async {
-    if (appID.isEmpty) {
+    if (widget.token.appId.isEmpty) {
       setState(() {
         _infoStrings.add(
           'APP_ID missing, please provide your APP_ID in settings.dart',
@@ -47,12 +47,12 @@ class _CallPageState extends State<CallPage> {
     await AgoraRtcEngine.enableWebSdkInteroperability(true);
     await AgoraRtcEngine.setParameters(
         '''{\"che.video.lowBitRateStreamParameter\":{\"width\":320,\"height\":180,\"frameRate\":15,\"bitRate\":140}}''');
-    await AgoraRtcEngine.joinChannel(null, widget.channelName, null, 0);
+    await AgoraRtcEngine.joinChannel(widget.token.token, widget.token.channel, null, 0);
   }
 
   /// Create agora sdk instance and initialize
   Future<void> _initAgoraRtcEngine() async {
-    await AgoraRtcEngine.create(appID);
+    await AgoraRtcEngine.create(widget.token.appId);
     await AgoraRtcEngine.enableVideo();
   }
 
@@ -164,14 +164,14 @@ Widget _panel() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agora Group Calling'),
+        title: Text('Kokkehjelp'),
       ),
       backgroundColor: Colors.black,
       body: Center(
         child: Stack(
           children: <Widget>[
             _viewRows(),
-            _panel(),
+            //_panel(),
             _toolbar(),
           ],
         ),
